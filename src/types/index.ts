@@ -13,7 +13,23 @@ export interface TodoItem {
   description: string;
 }
 
-export interface State {
+export interface Nominations {
   ids: Ids;
   item: Record<number, TodoItem>;
+}
+
+//Search types
+export interface Movie {
+  imdbID: string;
+  Title: string;
+  Year: string;
+  Poster: string;
+  Awards: string;
+}
+
+export interface Search {
+  id: Array<string>;
+  movies: Record<string, Movie>;
+  loading: boolean;
+  error: null | string;
 }
