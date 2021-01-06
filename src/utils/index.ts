@@ -1,15 +1,23 @@
-let errors = "";
+import { Movie } from "../types";
 
-export const validate = (value: string) => {
-  if (!value) {
-    errors = "Enter an item to add";
+export const getStoredNominations = () => {
+  const previousNominations: Array<Movie> = [];
 
-    return errors;
+  const localStore = window.localStorage;
+
+  for (let i = 0; i <= localStore.length - 1; i++) {
+    let id = "";
+
+    if (localStore.length !== 0) {
+      id = localStore.key(i) as string;
+    }
+
+    let nomination = localStore.getItem(id);
+
+    if (nomination) {
+      previousNominations.push(JSON.parse(nomination));
+    }
   }
 
-  if (!/^[A-Z0-9]/i.test(value)) {
-    errors = "Enter a valid item descrition";
-
-    return errors;
-  }
+  return previousNominations;
 };
