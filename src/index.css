@@ -46,7 +46,7 @@ h2 {
 ul {
   padding: 0;
   list-style: none;
-  max-height: 350px;
+  max-height: 18.75rem;
   overflow-y: auto;
 }
 
