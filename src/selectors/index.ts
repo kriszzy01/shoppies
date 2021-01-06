@@ -1,5 +1,7 @@
 import { RootState } from "../slices";
 
 //Nominations Selectors
-export const getIds = (state: RootState) => state.nominations.ids;
-export const getItems = (state: RootState) => state.nominations.item;
+export const getNominations = (state: RootState) => state.nominations;
+
+//Search Results Selectors
+export const getSearchedResults = (state: RootState) => state.searchResults;
