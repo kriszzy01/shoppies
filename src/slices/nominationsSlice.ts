@@ -1,33 +1,30 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { State, TodoItem } from "../types";
+import { Nominations, Movie } from "../types";
 
-const initialState: State = {
-  ids: [1, 2],
-  item: {
-    1: { id: 1, description: "Remember to buy eggs" },
-    2: { id: 2, description: "Learn Haskel" },
-  },
+const initialState: Nominations = {
+  id: [],
+  movies: {},
 };
 
 const nominations = createSlice({
   name: "nominations",
   initialState,
   reducers: {
-    deleteItem(state, { payload }: PayloadAction<number>) {
-      const filteredIds = state.ids.filter((id) => id !== payload);
-      state.ids = filteredIds;
+    deleteNomination(state, { payload }: PayloadAction<string>) {
+      const filteredIds = state.id.filter((id) => id !== payload);
+      state.id = filteredIds;
 
-      const { [payload]: selectedItem, ...otherItems } = state.item;
-      state.item = otherItems;
+      const { [payload]: selectedItem, ...otherMovies } = state.movies;
+      state.movies = otherMovies;
     },
-    addItem(state, { payload }: PayloadAction<TodoItem>) {
-      state.ids.push(payload.id);
+    addNomination(state, { payload }: PayloadAction<Movie>) {
+      state.id.push(payload.imdbID);
 
-      state.item[payload.id] = payload;
+      state.movies[payload.imdbID] = payload;
     },
   },
 });
 
-export const { deleteItem, addItem } = nominations.actions;
+export const { deleteNomination, addNomination } = nominations.actions;
 
 export default nominations.reducer;
