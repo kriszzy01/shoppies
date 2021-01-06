@@ -6,30 +6,22 @@ export type { RootState };
 
 export type AppThunk = ThunkAction<void, RootState, undefined, Action<string>>;
 
-type Ids = Array<number>;
+type Ids = Array<string>;
 
-export interface TodoItem {
-  id: number;
-  description: string;
-}
-
-export interface Nominations {
-  ids: Ids;
-  item: Record<number, TodoItem>;
-}
-
-//Search types
 export interface Movie {
   imdbID: string;
   Title: string;
   Year: string;
-  Poster: string;
-  Awards: string;
 }
 
-export interface Search {
-  id: Array<string>;
+export interface Nominations {
+  id: Ids;
   movies: Record<string, Movie>;
+}
+
+export interface Search extends Nominations {
+  totalResults: string;
+  searchedInput: string;
   loading: boolean;
   error: null | string;
 }
