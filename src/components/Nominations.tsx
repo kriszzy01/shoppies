@@ -8,7 +8,7 @@ import { getStoredNominations } from "../utils";
 export const Nominations: React.FC = () => {
   const { movies } = useSelector(getNominations);
 
-  const previousNominations = getStoredNominations(); //Get previously stored nominations
+  const { previousNominations } = getStoredNominations(); //Get previously stored nominations
 
   //Use either previously stored nominations or new ones
   const nominations =
@@ -25,7 +25,9 @@ export const Nominations: React.FC = () => {
 
     window.localStorage.removeItem(id); //Remove nomination to local storage
 
-    liveRegion.current = `removed ${movies[id].Title} from nominations`; //Store nominations to be announced
+    liveRegion.current = `removed ${
+      previousNominations[previousNominations.length - 1].Title
+    } from nominations`; //Store nominations to be announced
   };
 
   return (
