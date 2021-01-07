@@ -11,9 +11,9 @@ export const Searchbar: React.FC = () => {
 
   const debouncedInput = useCallback(
     debounce((nextValue) => {
-      dispatch(fetchMovies(nextValue)); //Make API request after 1s
+      dispatch(fetchMovies(nextValue)); //Make API request after 500ms
       dispatch(setSearchedInput(nextValue));
-    }, 1000),
+    }, 500),
     [] //Function will be created only once (initial render)
   );
 
@@ -27,7 +27,7 @@ export const Searchbar: React.FC = () => {
   return (
     <div className="searchContainer">
       <label htmlFor="search" className="vh">
-        Enter the title of the movie
+        Enter the title of a movie to search
       </label>
 
       <p aria-hidden>Movie Title</p>
