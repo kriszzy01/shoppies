@@ -6,7 +6,7 @@ import { getStoredNominations } from "../utils";
 export const Banner: React.FC = () => {
   const { movies } = useSelector(getNominations);
 
-  const previousNominations = getStoredNominations(); //Get previously stored nominations
+  const { previousNominations } = getStoredNominations(); //Get previously stored nominations
 
   //Use either previously stored nominations or new ones
   const nominations =

@@ -2,6 +2,7 @@ import { Movie } from "../types";
 
 export const getStoredNominations = () => {
   const previousNominations: Array<Movie> = [];
+  const previousIds: Array<string> = [];
 
   const localStore = window.localStorage;
 
@@ -15,9 +16,10 @@ export const getStoredNominations = () => {
     let nomination = localStore.getItem(id);
 
     if (nomination) {
+      previousIds.push(id);
       previousNominations.push(JSON.parse(nomination));
     }
   }
 
-  return previousNominations;
+  return { previousNominations, previousIds };
 };
