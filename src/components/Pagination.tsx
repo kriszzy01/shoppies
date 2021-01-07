@@ -1,40 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getSearchedResults } from "../selectors";
 import { fetchMovies } from "../slices/SearchSlice";
 
 export const Pagination: React.FC = () => {
-  const [page, setPage] = useState(1);
-
   const { totalResults, id, searchedInput } = useSelector(getSearchedResults);
+
+  const [page, setPage] = useState(2);
+  const [previousInput, setPreviousInput] = useState(searchedInput);
+
+  useEffect(() => {
+    setPage(2);
+    setPreviousInput(searchedInput);
+  }, [searchedInput]);
 
   const dispatch = useDispatch();
 
+  const hasNextPage = page < Math.floor(Number(totalResults) / 10);
+  const hasPrevPage = page > 2;
+
   const handleNext = () => {
-    if (page < Number(totalResults)) {
-        setPage((page) => page + 1);
-  
-        dispatch(fetchMovies(searchedInput, page));
-      }
+    setPage((page) => page + 1);
+    dispatch(fetchMovies(previousInput, page));
   };
 
   const handlePrev = () => {
-    if (page === 0) {
-      setPage((page) => page - 1);
-
-      dispatch(fetchMovies(searchedInput, page));
-    }
+    setPage((page) => page - 1);
+    dispatch(fetchMovies(previousInput, page-2));
   };
 
   return (
     <>
       {id.length !== 0 && (
         <div className="pagination">
-          <button type="button" onClick={handlePrev}>
+          <button type="button" onClick={handlePrev} aria-label="Previous Page" disabled={!hasPrevPage}>
             Prev
           </button>
 
-          <button type="button" onClick={handleNext}>
+          <button type="button" onClick={handleNext} aria-label="Next Page" disabled={!hasNextPage}>
             Next
           </button>
         </div>
