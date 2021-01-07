@@ -24,7 +24,6 @@ const search = createSlice({
       state.id = [];
       state.movies = {};
 
-      state.searchedInput = "";
       state.totalResults = "";
       state.loading = true;
       state.error = null;
