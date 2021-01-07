@@ -34,7 +34,7 @@ li {
 
 h2 {
   position: sticky;
-  background-color: #fff;
+  background-color: var(--color-neutral);
   top: 0;
   display: flex;
   justify-content: space-between;
@@ -46,7 +46,7 @@ h2 {
 ul {
   padding: 0;
   list-style: none;
-  max-height: 350px;
+  max-height: 18rem;
   overflow-y: auto;
 }
 
@@ -169,8 +169,6 @@ li:hover {
 }
 
 .pagination {
-  display: none;
-  visibility: hidden;
   position: absolute;
   z-index: 1;
   top: 0.5rem;
