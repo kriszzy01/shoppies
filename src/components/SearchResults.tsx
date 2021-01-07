@@ -13,7 +13,7 @@ export const SearchResults: React.FC = () => {
 
   const { id } = useSelector(getNominations);
 
-  const previousNominations = getStoredNominations(); //Get previously stored nominations
+  const { previousNominations, previousIds } = getStoredNominations(); //Get data of previously stored nominations
 
   const dispatch = useDispatch();
 
@@ -33,7 +33,6 @@ export const SearchResults: React.FC = () => {
 
   return (
     <section aria-label="Search Results">
-      <Pagination />
       {searchedInput && (
         <h2>{sectionHeading(loading, error, searchedInput)}</h2>
       )}
@@ -58,13 +57,18 @@ export const SearchResults: React.FC = () => {
               aria-label={`Nominate ${movie.Title}`}
               onClick={() => handleNominate(movie.imdbID)}
               disabled={id.includes(movie.imdbID)}
+              data-nominated={previousIds.includes(movie.imdbID)}
             >
-              <span aria-hidden="true">Nominate</span>
+              <span aria-hidden="true">
+                {previousIds.includes(movie.imdbID) ? "Nominated" : "Nominate"}
+              </span>
               <span className="vh">Nominate {`${movie.Title}`}</span>
             </button>
           </li>
         ))}
       </ul>
+
+      <Pagination />
 
       <div role="status" aria-live="polite" className="vh">
         {liveRegion.current}
