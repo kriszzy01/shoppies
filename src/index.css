@@ -5,11 +5,13 @@
 }
 
 :root {
-  --color-primary: #2a7fff;
-  --color-neutral: rgb(255, 243, 233);
-  --color-secondary: #c4c0bf;
-  --color-danger:   rgb(207, 18, 18);
+  --color-primary: #3a305f;
+  --color-neutral: #eeeeee;
+  --color-secondary: #c4c4c4;
+  --color-danger: rgb(207, 18, 18);
   --color-dark: #000;
+  --color-grey: #444;
+  --color-success: rgb(13, 110, 0);
 }
 
 body {
@@ -20,7 +22,7 @@ body {
   max-width: 80rem;
   line-height: 1.5;
   font-size: 125%;
-  padding: 2rem 1.5rem;
+  padding: 1rem 1.5rem;
   margin: 0 auto;
 }
 
@@ -32,10 +34,13 @@ li {
   margin: 0;
 }
 
+h1 {
+  line-height: 1.1;
+  color: var(--color-neutral);
+}
+
 h2 {
-  position: sticky;
   background-color: var(--color-neutral);
-  top: 0;
   display: flex;
   justify-content: space-between;
   box-shadow: 0px 1px 3px 0 rgba(0, 0, 0, 0.3);
@@ -46,7 +51,7 @@ h2 {
 ul {
   padding: 0;
   list-style: none;
-  max-height: 18rem;
+  max-height: 22rem;
   overflow-y: auto;
 }
 
@@ -94,29 +99,34 @@ input,
   font-size: 0.8rem;
   letter-spacing: 1px;
   cursor: pointer;
-  background:var(--color-dark);
+  background: var(--color-dark);
   color: var(--color-neutral);
   padding: 0.5rem;
   margin-right: 0.5rem;
 }
 
+[type="text"]:focus,
 [type="button"]:focus,
 [type="button"]:not(:disabled):hover {
   outline: none;
-  box-shadow: 0 0 0 0.125rem var(--color-primary);
+  box-shadow: 0 0 0 0.125rem var(--color-danger);
+}
+
+[type="button"][aria-label^="Delete"]:hover,
+[type="button"][aria-label^="Delete"]:focus {
+  box-shadow: 0 0 0 0.125rem var(--color-dark);
 }
 
 :disabled {
-  background-color: var(--color-primary);
+  background-color: var(--color-secondary);
+}
+
+[data-nominated="true"] {
+  background-color: var(--color-success);
 }
 
 [aria-label^="Delete"] {
   background-color: var(--color-danger);
-}
-
-input:focus {
-  outline: none;
-  box-shadow: 0 0 0 0.125rem var(--color-dark);
 }
 
 .vh {
@@ -130,15 +140,15 @@ input:focus {
   overflow: hidden;
 }
 
-.searchContainer {
+.headerContainer {
+  width: 100%;
   background-color: var(--color-primary);
-  padding: 15px 20px;
-  margin-top: 1.5rem;
+  padding: 20px 20px;
 }
 
 .searchInput {
   position: relative;
-  display: flex;
+  margin-top: 1rem;
 }
 
 .searchInput [aria-hidden] {
@@ -152,6 +162,7 @@ input:focus {
 
 li {
   display: flex;
+  flex-wrap: wrap;
   width: 99%;
   flex-direction: column;
   align-items: flex-start;
@@ -169,13 +180,19 @@ li:hover {
 }
 
 .pagination {
-  position: absolute;
-  z-index: 1;
-  top: 0.5rem;
-  right: 0;
+  position: sticky;
+  top: 100%;
+  margin-top: 1rem;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.pagination [type="button"]:not(:disabled) {
+  background-color: var(--color-primary);
+  padding: 0.8rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
 }
 
 [data-banner] {
@@ -186,7 +203,8 @@ li:hover {
   text-align: center;
   height: 0;
   line-height: 1;
-  color: var(--color-danger);
+  color: var(--color-success);
+  font-weight: bold;
   transition: all 0.15s cubic-bezier(0.075, 0.82, 0.165, 1);
   overflow: hidden;
 }
@@ -217,22 +235,22 @@ footer {
 }
 
 ::-webkit-input-placeholder {
-  color: #444;
+  color: var(--color-grey);
   font-style: italic;
 }
 
 ::-moz-placeholder {
-  color: #444;
+  color: var(--color-grey);
   font-style: italic;
 }
 
 :-ms-input-placeholder {
-  color: #444;
+  color: var(--color-grey);
   font-style: italic;
 }
 
 :-moz-placeholder {
-  color: #444;
+  color: var(--color-grey);
   font-style: italic;
 }
 
@@ -241,23 +259,49 @@ footer {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--color-secondary);
+  background-color: var(--color-grey);
   border-radius: 2.5rem;
 }
 
-@media screen and (min-width: 48em) {
+@media screen and (min-width: 49em) {
   body {
     overflow: hidden;
   }
 
-  [type="button"] {
-    margin-left: auto;
+  .headerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color: var(--color-primary);
+    padding: 20px;
+  }
+
+  .searchInput {
+    margin-top: 0;
+    flex-basis: 19.1875rem;
+    transition: flex-basis 0.15s cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+
+  .searchInput:focus-within {
+    flex-basis: 80%;
+  }
+
+  .pagination {
+    left: 50%;
+    transform: translateX(-90%);
+  }
+
+  h2 {
+    position: sticky;
+    top: 0;
   }
 
   li {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
   }
 
   .content {

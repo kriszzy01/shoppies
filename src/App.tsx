@@ -1,16 +1,13 @@
 import React from "react";
 import { Banner } from "./components/Banner";
 import { Nominations } from "./components/Nominations";
-import { Searchbar } from "./components/Searchbar";
+import { Header } from "./components/Header";
 import { SearchResults } from "./components/SearchResults";
 
 const App: React.FC = () => {
   return (
     <>
-      <header>
-        <h1 tabIndex={-1}>The Shoppies</h1>
-        <Searchbar />
-      </header>
+      <Header />
 
       <main>
         <Banner />

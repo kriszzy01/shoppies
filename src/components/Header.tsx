@@ -4,7 +4,7 @@ import debounce from "lodash.debounce";
 
 import { fetchMovies, setSearchedInput } from "../slices/SearchSlice";
 
-export const Searchbar: React.FC = () => {
+export const Header: React.FC = () => {
   const [searchInput, setSearchInput] = useState("");
 
   const dispatch = useDispatch();
@@ -25,12 +25,8 @@ export const Searchbar: React.FC = () => {
   };
 
   return (
-    <div className="searchContainer">
-      <label htmlFor="search" className="vh">
-        Enter the title of a movie to search
-      </label>
-
-      <p aria-hidden>Movie Title</p>
+    <header className="headerContainer">
+      <h1>Shoppies</h1>
 
       <div className="searchInput">
         <i aria-hidden="true">
@@ -40,6 +36,10 @@ export const Searchbar: React.FC = () => {
           </svg>
         </i>
 
+        <label htmlFor="search" className="vh">
+          Enter the title of a movie to search
+        </label>
+
         <input
           type="text"
           id="search"
@@ -48,6 +48,6 @@ export const Searchbar: React.FC = () => {
           onChange={handleChange}
         />
       </div>
-    </div>
+    </header>
   );
 };
