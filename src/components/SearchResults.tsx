@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getSearchedResults, getNominations } from "../selectors";
 import { Movie } from "../types";
@@ -17,6 +17,8 @@ export const SearchResults: React.FC = () => {
 
   const dispatch = useDispatch();
 
+  const liveRegion = useRef<string>(""); //For accessiblity - used to store changes to live region
+
   const handleNominate = (nomination: string) => {
     const nominatedMovie = movies[nomination];
 
@@ -24,16 +26,16 @@ export const SearchResults: React.FC = () => {
       dispatch(addNomination(nominatedMovie));
 
       window.localStorage.setItem(nomination, JSON.stringify(nominatedMovie)); //Save nomination to local storage
+
+      liveRegion.current = `nominated ${nominatedMovie.Title}`; //Store nominations to be announced
     }
   };
 
   return (
-    <section aria-labelledby="todos-label">
+    <section aria-label="Search Results">
       <Pagination />
       {searchedInput && (
-        <h2 id="todos-label">
-          {sectionHeading(loading, error, searchedInput)}
-        </h2>
+        <h2>{sectionHeading(loading, error, searchedInput)}</h2>
       )}
 
       <div className="empty-state">
@@ -65,7 +67,7 @@ export const SearchResults: React.FC = () => {
       </ul>
 
       <div role="status" aria-live="polite" className="vh">
-        {/* Announce nominations added*/}
+        {liveRegion.current}
       </div>
     </section>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getNominations } from "../selectors";
 import { deleteNomination } from "../slices/nominationsSlice";
@@ -18,19 +18,19 @@ export const Nominations: React.FC = () => {
 
   const dispatch = useDispatch();
 
+  const liveRegion = useRef<string>(""); //For accessiblity - used to store changes to live region
+
   const handleRemove = (id: string) => {
     dispatch(deleteNomination(id));
 
     window.localStorage.removeItem(id); //Remove nomination to local storage
+
+    liveRegion.current = `removed ${movies[id].Title} from nominations`; //Store nominations to be announced
   };
 
   return (
-    <aside aria-labelledby="nominations">
-      {nominations.length !== 0 && (
-        <h2 id="nominations" tabIndex={-1}>
-          Nominations
-        </h2>
-      )}
+    <aside aria-label="nominations">
+      {nominations.length !== 0 && <h2>Nominations</h2>}
 
       <div className="empty-state">
         <p>
@@ -56,6 +56,10 @@ export const Nominations: React.FC = () => {
           </li>
         ))}
       </ul>
+
+      <div role="status" aria-live="polite" className="vh">
+        {liveRegion.current}
+      </div>
     </aside>
   );
 };
