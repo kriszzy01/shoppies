@@ -16,7 +16,9 @@ export const Pagination: React.FC = () => {
 
   const dispatch = useDispatch();
 
-  const hasNextPage = page < Math.floor(Number(totalResults) / 10);
+  const totalPages = Math.floor(Number(totalResults) / 10);
+
+  const hasNextPage = page <= totalPages;
   const hasPrevPage = page > 2;
 
   const handleNext = () => {
@@ -26,18 +28,31 @@ export const Pagination: React.FC = () => {
 
   const handlePrev = () => {
     setPage((page) => page - 1);
-    dispatch(fetchMovies(previousInput, page-2));
+    dispatch(fetchMovies(previousInput, page - 2));
   };
 
   return (
     <>
       {id.length !== 0 && (
         <div className="pagination">
-          <button type="button" onClick={handlePrev} aria-label="Previous Page" disabled={!hasPrevPage}>
+          <h3>
+            Page {page - 1} of {totalPages}
+          </h3>
+          <button
+            type="button"
+            onClick={handlePrev}
+            aria-label="Previous Page"
+            disabled={!hasPrevPage}
+          >
             Prev
           </button>
 
-          <button type="button" onClick={handleNext} aria-label="Next Page" disabled={!hasNextPage}>
+          <button
+            type="button"
+            onClick={handleNext}
+            aria-label="Next Page"
+            disabled={!hasNextPage}
+          >
             Next
           </button>
         </div>
