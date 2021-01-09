@@ -45,7 +45,7 @@ export const Nominations: React.FC = () => {
         {nominations.map((movie: Movie) => (
           <li key={movie.imdbID}>
             <p className="text">
-              {movie.Title} ({movie.Year})
+              {movie.Title} ({movie.Year.slice(0, 4)})
             </p>
             <button
               type="button"
