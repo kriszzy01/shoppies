@@ -34,7 +34,7 @@ export const SearchResults: React.FC = () => {
   return (
     <section aria-label="Search Results">
       {searchedInput && (
-        <h2>{sectionHeading(loading, error, searchedInput)}</h2>
+        <h2 data-loading={loading}>{sectionHeading(loading, error, searchedInput)}</h2>
       )}
 
       <div className="empty-state">
@@ -50,13 +50,13 @@ export const SearchResults: React.FC = () => {
         {Object.values(movies).map((movie: Movie) => (
           <li key={movie.imdbID}>
             <p className="text">
-              {movie.Title} ({movie.Year})
+              {movie.Title} ({movie.Year.slice(0, 4)})
             </p>
             <button
               type="button"
               aria-label={`Nominate ${movie.Title}`}
               onClick={() => handleNominate(movie.imdbID)}
-              disabled={id.includes(movie.imdbID)}
+              disabled={previousIds.length === 5}
               data-nominated={previousIds.includes(movie.imdbID)}
             >
               <span aria-hidden="true">
