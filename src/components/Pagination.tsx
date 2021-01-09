@@ -4,7 +4,9 @@ import { getSearchedResults } from "../selectors";
 import { fetchMovies } from "../slices/SearchSlice";
 
 export const Pagination: React.FC = () => {
-  const { totalResults, id, searchedInput } = useSelector(getSearchedResults);
+  const { totalResults, searchedInput, error, loading } = useSelector(
+    getSearchedResults
+  );
 
   const [page, setPage] = useState(2);
   const [previousInput, setPreviousInput] = useState(searchedInput);
@@ -22,21 +24,25 @@ export const Pagination: React.FC = () => {
   const hasPrevPage = page > 2;
 
   const handleNext = () => {
-    setPage((page) => page + 1);
-    dispatch(fetchMovies(previousInput, page));
+    if (!loading) {
+      setPage((page) => page + 1);
+      dispatch(fetchMovies(previousInput, page));
+    }
   };
 
   const handlePrev = () => {
-    setPage((page) => page - 1);
-    dispatch(fetchMovies(previousInput, page - 2));
+    if (!loading) {
+      setPage((page) => page - 1);
+      dispatch(fetchMovies(previousInput, page - 2));
+    }
   };
 
   return (
     <>
-      {id.length !== 0 && (
+      {searchedInput && !error && (
         <div className="pagination">
           <h3>
-            Page {page - 1} of {totalPages}
+            Page {page - 1} of {totalPages < 1 ? 1 : totalPages}
           </h3>
           <button
             type="button"
