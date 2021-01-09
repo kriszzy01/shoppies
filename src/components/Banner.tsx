@@ -15,8 +15,11 @@ export const Banner: React.FC = () => {
       : Object.values(movies);
 
   return (
-    <div data-banner={nominations.length === 5 ? "open" : "closed"}>
-      <p>You have successfully made five nominations</p>
+    <div
+      role="banner"
+      data-banner={nominations.length === 5 ? "open" : "closed"}
+    >
+      <p>All done! You have successfully made your five nominations</p>
     </div>
   );
 };
