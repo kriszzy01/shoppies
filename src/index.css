@@ -188,11 +188,15 @@ li:hover {
   gap: 0.5rem;
 }
 
-.pagination [type="button"]:not(:disabled) {
+.pagination [type="button"] {
   background-color: var(--color-primary);
   padding: 0.8rem 1.5rem;
   border-radius: 0.5rem;
   font-size: 1rem;
+}
+
+.pagination :disabled {
+  background-color: var(--color-secondary);
 }
 
 [data-banner] {
@@ -258,6 +262,10 @@ footer {
   width: 0.6rem;
 }
 
+::-webkit-scrollbar-track {
+  background-color: rgb(167, 156, 145);
+}
+
 ::-webkit-scrollbar-thumb {
   background-color: var(--color-grey);
   border-radius: 2.5rem;
@@ -295,6 +303,10 @@ footer {
   h2 {
     position: sticky;
     top: 0;
+  }
+
+  ul {
+    height: 22rem;
   }
 
   li {
