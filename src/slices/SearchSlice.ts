@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { searchMovies } from "../api/omdbApi";
 import { Search, Movie, AppThunk } from "../types";
 
-const initialState: Search = {
+export const initialState: Search = {
   totalResults: "",
   searchedInput: "",
   id: [],
@@ -23,8 +23,6 @@ const search = createSlice({
       //Clear previous search results
       state.id = [];
       state.movies = {};
-
-      state.totalResults = "";
       state.loading = true;
       state.error = null;
     },

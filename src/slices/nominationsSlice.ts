@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Nominations, Movie } from "../types";
 
-const initialState: Nominations = {
+export const initialState: Nominations = {
   id: [],
   movies: {},
 };
