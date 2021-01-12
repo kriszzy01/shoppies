@@ -1,12 +1,26 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getSearchedResults, getNominations } from "../selectors";
 import { Movie } from "../types";
 import { addNomination } from "../slices/nominationsSlice";
+import { fetchMovieDetails } from "../slices/SearchSlice";
 import { getStoredNominations } from "../utils";
 import { Pagination } from "./Pagination";
+import { Modal } from "./Modal";
 
 export const SearchResults: React.FC = () => {
+  const [showModal, setShowModal] = useState("");
+
+  useEffect(() => {
+    if (showModal) {
+      document.querySelector("body")?.setAttribute("data-modal-open", "");
+    }
+
+    return () => {
+      document.querySelector("body")?.removeAttribute("data-modal-open");
+    };
+  }, [showModal]);
+
   const searchResults = useSelector(getSearchedResults);
 
   const { movies, loading, searchedInput, error } = searchResults;
@@ -31,10 +45,21 @@ export const SearchResults: React.FC = () => {
     }
   };
 
+  const handleMovieDetails = (movieId: string) => {
+    if (!movies[movieId].Detail) {
+      //Only fetch when movie detail doesn't exist
+      dispatch(fetchMovieDetails(movieId));
+    }
+
+    setShowModal(movieId);
+  };
+
   return (
     <section aria-label="Search Results">
       {searchedInput && (
-        <h2 data-loading={loading}>{sectionHeading(loading, error, searchedInput)}</h2>
+        <h2 data-loading={loading}>
+          {sectionHeading(loading, error, searchedInput)}
+        </h2>
       )}
 
       <div className="empty-state">
@@ -51,7 +76,27 @@ export const SearchResults: React.FC = () => {
           <li key={movie.imdbID}>
             <p className="text">
               {movie.Title} ({movie.Year.slice(0, 4)})
+              <button
+                type="button"
+                onClick={() => handleMovieDetails(movie.imdbID)}
+                aria-label={`show details of ${movie.Detail}`}
+              >
+                <svg
+                  width="32"
+                  height="32"
+                  version="1.1"
+                  viewBox="0 0 8.4667 8.4667"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g fillRule="evenodd" strokeWidth=".26458" fill="white">
+                    <ellipse cx=".82682" cy="4.2522" rx=".87407" ry=".82682" />
+                    <ellipse cx="4.2286" cy="4.2522" rx=".87407" ry=".82682" />
+                    <ellipse cx="7.6304" cy="4.2522" rx=".87407" ry=".82682" />
+                  </g>
+                </svg>
+              </button>
             </p>
+
             <button
               type="button"
               aria-label={`Nominate ${movie.Title}`}
@@ -67,6 +112,8 @@ export const SearchResults: React.FC = () => {
           </li>
         ))}
       </ul>
+
+      <Modal movieId={showModal} handleModal={setShowModal} />
 
       <Pagination />
 

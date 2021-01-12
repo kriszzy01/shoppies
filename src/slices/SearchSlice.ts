@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { searchMovies } from "../api/omdbApi";
-import { Search, Movie, AppThunk } from "../types";
+import { searchMovies, getMovieDetails } from "../api/omdbApi";
+import { Search, Movie, AppThunk, MovieDetails } from "../types";
 
 export const initialState: Search = {
   totalResults: "",
@@ -48,6 +48,11 @@ const search = createSlice({
       state.error = payload;
       state.loading = false;
     },
+
+    setMovieDetails(state, { payload }: PayloadAction<MovieDetails>) {
+      const selectedMovie = state.movies[payload.imdbID];
+      selectedMovie.Detail = payload;
+    },
   },
 });
 
@@ -56,6 +61,7 @@ export const {
   searchMoviesSuccess,
   searchMoviesFailure,
   setSearchedInput,
+  setMovieDetails,
 } = search.actions;
 
 export default search.reducer;
@@ -74,4 +80,12 @@ export const fetchMovies = (
   } catch (error) {
     dispatch(searchMoviesFailure(error.message));
   }
+};
+
+export const fetchMovieDetails = (movieId: string): AppThunk => async (
+  dispatch
+) => {
+  const details = await getMovieDetails(movieId);
+
+  dispatch(setMovieDetails(details));
 };

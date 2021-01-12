@@ -28,7 +28,9 @@ describe("App", () => {
   test("should render without crashing", () => {
     renderWithRedux(<App />);
 
-    expect(screen.queryByRole("heading")).toHaveTextContent(/shoppies/i);
+    expect(
+      screen.queryByRole("heading", { name: /shoppies/i })
+    ).toHaveTextContent(/shoppies/i);
 
     expect(
       screen.queryByPlaceholderText(/enter movie title/i)

@@ -8,10 +8,25 @@ export type AppThunk = ThunkAction<void, RootState, undefined, Action<string>>;
 
 type Ids = Array<string>;
 
+export interface MovieDetails {
+  Title: string;
+  Year: string;
+  Released: string;
+  Runtime: string;
+  Genre: string;
+  Director: string;
+  Actors: string;
+  Plot: string;
+  Poster: string;
+  imdbID: string;
+  imdbRating: string;
+}
+
 export interface Movie {
   imdbID: string;
   Title: string;
   Year: string;
+  Detail: MovieDetails;
 }
 
 export interface Nominations {
