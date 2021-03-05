@@ -6,18 +6,16 @@ export const getStoredNominations = () => {
 
   const localStore = window.localStorage;
 
-  for (let i = 0; i <= localStore.length - 1; i++) {
-    let id = "";
+  if (localStore.length !== 0) {
+    for (let i = 0; i <= localStore.length - 1; i++) {
+      let id = localStore.key(i) as string;
 
-    if (localStore.length !== 0) {
-      id = localStore.key(i) as string;
-    }
+      let nomination = localStore.getItem(id);
 
-    let nomination = localStore.getItem(id);
-
-    if (nomination) {
-      previousIds.push(id);
-      previousNominations.push(JSON.parse(nomination));
+      if (nomination) {
+        previousIds.push(id);
+        previousNominations.push(JSON.parse(nomination));
+      }
     }
   }
 
